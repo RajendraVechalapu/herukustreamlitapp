@@ -1,73 +1,29 @@
-# Packages
-import streamlit as st 
-import pandas as pd
+# simple_addition_app.py
 
-# Database Manage
-import sqlite3 
-conn = sqlite3.connect('data/world.sqlite')
-c = conn.cursor()
+import streamlit as st
 
-
-# Fn Execution
-def sql_executor(raw_code):
-	c.execute(raw_code)
-	data = c.fetchall()
-	return data 
-
-
-city = ['ID,', 'Name,', 'CountryCode,', 'District,', 'Population']
-country = ['Code,', 'Name,', 'Continent,', 'Region,', 'SurfaceArea,', 'IndepYear,', 'Population,', 'LifeExpectancy,', 'GNP,', 'GNPOld,', 'LocalName,', 'GovernmentForm,', 'HeadOfState,', 'Capital,', 'Code2']
-countrylanguage = ['CountryCode,', 'Language,', 'IsOfficial,', 'Percentage']
-
-
-
+def add_numbers(num1, num2):
+    """Function to add two numbers."""
+    result = num1 + num2
+    return result
 
 def main():
-	st.title("Practice SQL")
+    # Streamlit app title
+    st.title("Simple Addition App")
 
-	menu = ["Home","About"]
-	choice = st.sidebar.selectbox("Menu",menu)
+    # Input for the first number
+    num1 = st.number_input("Enter the first number:")
 
-	if choice == "Home":
-		st.subheader("Home-Page")
-		st.text("Group 13: Muhammad Sohaib, Abid Hussain, 結城, 飞呀, 少年唯有一JIAN ")
-		# Columns/Layout
-		col1,col2 = st.beta_columns(2)
+    # Input for the second number
+    num2 = st.number_input("Enter the second number:")
 
-		with col1:
-			with st.form(key='query_form'):
-				raw_code = st.text_area("SQL Code here")
-				submit_code = st.form_submit_button("Execute")
+    # Call the add_numbers function
+    result = add_numbers(num1, num2)
 
-			# Table of Info
+    # Display the result
+    st.write(f"The result of {num1} + {num2} is: {result}")
 
-			with st.beta_expander("Table Information"):
-				table_info = {'city':city,'country':country,'countrylanguage':countrylanguage}
-				st.json(table_info)
-			
-		# Results Layouts
-		with col2:
-			if submit_code:
-				st.info("Query Submitted")
-				st.code(raw_code)
-
-				# Results 
-				query_results = sql_executor(raw_code)
-				with st.beta_expander("Results"):
-					st.write(query_results)
-
-				with st.beta_expander("Pretty Table"):
-					query_df = pd.DataFrame(query_results)
-					st.dataframe(query_df)
-
-
-	else:
-		st.subheader("About")
-
-		st.text("Built with Streamlit & Pandas")
-		st.text("Group 13: Muhammad Sohaib, Abid Hussain, 結城, 飞呀, 少年唯有一JIAN")
-
-
-
-if __name__ == '__main__':
-	main()
+# Check if the script is being run directly
+if __name__ == "__main__":
+    # Call the main function to run the Streamlit app
+    main()
