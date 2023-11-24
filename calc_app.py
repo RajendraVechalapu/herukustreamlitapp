@@ -1,4 +1,6 @@
 import streamlit as st
+import datetime
+import random
 
 def calculator():
     st.title("Simple Calculator")
@@ -25,6 +27,27 @@ def calculator():
 
     # Display the result
     st.write(f"Result of {operation}: {result}")
+
+    # Add a button to display a funny quote with timestamp when clicked
+    if st.button("Click for a Funny Quote"):
+        display_funny_quote()
+
+def display_funny_quote():
+    # List of funny quotes
+    funny_quotes = [
+        "Why don't scientists trust atoms? Because they make up everything!",
+        "I told my wife she should embrace her mistakes. She gave me a hug.",
+        "Why did the scarecrow win an award? Because he was outstanding in his field!",
+        "I'm reading a book on anti-gravity. It's impossible to put down!",
+        "Why don't skeletons fight each other? They don't have the guts.",
+    ]
+
+    # Select a random funny quote
+    quote = random.choice(funny_quotes)
+
+    # Display the funny quote with a timestamp
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    st.write(f"\n\n{quote}\n\nTimestamp: {timestamp}")
 
 if __name__ == "__main__":
     calculator()
